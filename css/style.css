@@ -1,5 +1,9 @@
 @charset "UTF-8";
 
+  body {
+      background: #edf0f1;
+  }
+
   body, input, button {
     font-family: 'Roboto', sans-serif;
   }
