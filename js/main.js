@@ -35,6 +35,7 @@ function addTodoItem(text) {
     var deleteItButton = document.createElement('button');
     deleteItButton.classList.add('delete');
     deleteItButton.innerHTML = deleteButtonSVG;
+    deleteItButton.addEventListener('click', deleteTodo);
 
     var completeItButton = document.createElement('button');
     completeItButton.classList.add('complete');
@@ -53,7 +54,14 @@ function addTodoItem(text) {
   }
 }
 
-//Task: Deleting a non-completed todo item
+//Task: Deleting todo item
+function deleteTodo(){
+  var item = this.parentNode.parentNode;
+  var parent = item.parentNode;
+
+  parent.removeChild(item);
+}
+
 //Task: Setting a non-completed todo item as completed
 function completeTodo() {
   var completedItem = this.parentNode.parentNode;
