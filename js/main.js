@@ -36,8 +36,8 @@ function addTodoItem(text) {
     completeItButton.classList.add('complete');
     completeItButton.innerHTML = completeButtonSVG;
 
-    itemButtons.appendChild(completeItButton);
     itemButtons.appendChild(deleteItButton);
+    itemButtons.appendChild(completeItButton);
 
     //New items should got to the top of the list.
     var todo = document.createElement('li');
