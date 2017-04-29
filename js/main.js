@@ -2,13 +2,20 @@
 //the DOM is completed loaded
 
 var addButtom = document.getElementById('add');
-var item = document.getElementById('item');
+var newTodo = document.getElementById('newTodo');
+var todoList = document.getElementById('todoList');
 
 addButtom.addEventListener('click', function(){
-  var value = item.value;
-
-  if (value) {
-      //add to the todo list
-  }
-
+  addTodoItem(newTodo.value);
 });
+
+function addTodoItem(text) {
+  //Text should not be empty.
+  if (text) {
+    var todo = document.createElement('li');
+    todo.innerText = text;
+
+    //New items should got to the top of the list.
+    todoList.insertBefore(todo, todoList.childNodes[0]);
+  }
+}
