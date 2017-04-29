@@ -26,7 +26,11 @@
     color: #fff;
     font-size: 15px;
     font-weight: 400;
+
+    /* look at how the input's text overflows to the left.
+    Gives a better user experience then setting the padding only */
     text-indent: 18px;
+
     padding: 0 60px 0 0;
 
     border-top-left-radius: 5px;
