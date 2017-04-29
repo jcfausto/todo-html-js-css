@@ -40,7 +40,7 @@ function addTodoItem(text) {
     var completeItButton = document.createElement('button');
     completeItButton.classList.add('complete');
     completeItButton.innerHTML = completeButtonSVG;
-    completeItButton.addEventListener('click', completeTodo);
+    completeItButton.addEventListener('click', toggleTodo);
 
     itemButtons.appendChild(deleteItButton);
     itemButtons.appendChild(completeItButton);
@@ -63,9 +63,14 @@ function deleteTodo(){
 }
 
 //Task: Setting a non-completed todo item as completed
-function completeTodo() {
-  var completedItem = this.parentNode.parentNode;
-  todoList.removeChild(completedItem);
-  completedTodos.insertBefore(completedItem, completedTodos.childNodes[0]);
-}
 //Task: Re-adding a completed todo item to the todo list
+function toggleTodo() {
+  var item = this.parentNode.parentNode;
+  var parent = item.parentNode;
+  var id = parent.id;
+
+  var targetList = (id === "todoList") ? completedTodos : todoList;
+
+  parent.removeChild(item);
+  targetList.insertBefore(item, targetList.childNodes[0]);
+}
