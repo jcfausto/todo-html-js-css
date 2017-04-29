@@ -2,6 +2,7 @@
 
   body {
       background: #edf0f1;
+      padding: 80px 0 0 0;
   }
 
   body, input, button {
@@ -98,7 +99,37 @@
     margin: -8px 0 0 -8px;
   }
 
-
   header button svg .fill {
     fill: #25b99a;
+  }
+
+  .container {
+    width: 100%;
+    float: left;
+    padding: 15px;
+  }
+
+  ul.todo {
+    width: 100%;
+    float: left;
+  }
+
+  ul.todo li {
+    width: 100%;
+    min-height: 50px;
+    float: left;
+    background: #fff;
+    border-radius: 5px;
+    box-shadow: 0px 1px 2px rgb(44, 62, 80, 0.10);
+    margin: 0 0 10px 0;
+    padding: 14px 100px 14px 14px;
+
+    font-size: 14px;
+    font-weight: 500;
+    color: #444;
+    line-height: 22px;
+  }
+
+  ul.todo li:last-of-type {
+    margin: 0; /* the last item on the list will have no bottom margin */
   }
