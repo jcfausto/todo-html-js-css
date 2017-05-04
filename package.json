@@ -1,0 +1,30 @@
+{
+  "name": "todo-html-js-css",
+  "version": "1.0.0",
+  "description": "A pure HTML JavaScrip and CSS todo list using Webpack as manager",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack js/main.js dist/bundle.js",
+    "build:prod": "webpack js/main.js dist/bundle.js -p"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jcfausto/todo-html-js-css.git"
+  },
+  "keywords": [
+    "HTML",
+    "JS",
+    "CSS",
+    "Webpack"
+  ],
+  "author": "jcfausto",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jcfausto/todo-html-js-css/issues"
+  },
+  "homepage": "https://github.com/jcfausto/todo-html-js-css#readme",
+  "devDependencies": {
+    "webpack": "^2.5.0"
+  }
+}
