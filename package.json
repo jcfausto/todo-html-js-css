@@ -25,6 +25,12 @@
   },
   "homepage": "https://github.com/jcfausto/todo-html-js-css#readme",
   "devDependencies": {
+    "babel-core": "^6.24.1",
+    "babel-loader": "^7.0.0",
+    "babel-preset-es2015": "^6.24.1",
     "webpack": "^2.5.0"
+  },
+  "dependencies": {
+    "moment": "^2.18.1"
   }
 }
