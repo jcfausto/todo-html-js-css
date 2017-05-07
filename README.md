@@ -18,4 +18,4 @@ A HTML, JS and CSS todo list using:
 - Bundle CSS files
 - Testing (BDD)
 - Reusable web components (https://www.polymer-project.org/)
-- Authentication (Planning to user Firebase)
+- Authentication (Planning to use Firebase)
