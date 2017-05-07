@@ -4,9 +4,9 @@ Demo here: https://fir-todo-95078.firebaseapp.com/
 
 A HTML, JS and CSS todo list using:
 - Local storage
-- Webpack
-- MomentJS
-- Babel as compiler
+- Webpack (https://webpack.js.org/)
+- MomentJS (http://momentjs.com/)
+- Babel as JS compiler (https://babeljs.io/)
 
 ## How to use it
 - Clone it
@@ -15,6 +15,7 @@ A HTML, JS and CSS todo list using:
 - $ npm run webpack:prod (for deployment)
 
 ## To do
+- Bundle CSS files
 - Testing (BDD)
 - Reusable web components (https://www.polymer-project.org/)
 - Authentication (Planning to user Firebase)
