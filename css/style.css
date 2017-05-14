@@ -272,3 +272,18 @@
     font-size: 12px;
     color: #aaa;
   }
+
+
+/* Item url styles */
+
+  ul.todo mark {
+    background-color: #fdffb6;
+  }
+
+  ul.todo a {
+    color: #0065ff;
+  }
+
+  ul.todo a:visited {
+    color: #000000;
+  }

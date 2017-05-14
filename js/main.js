@@ -5,6 +5,9 @@
 import {deleteButtonSVG, completeButtonSVG} from './svgs.js';
 var moment = require('moment');
 
+//Make links added to the text likable
+import { linkify } from './linkify.js';
+
 var addButton = document.getElementById('add');
 var deleteButton = document.getElementById('delete');
 var completeButton = document.getElementById('complete');
@@ -129,7 +132,7 @@ function addTodoItem(item, isCompleted) {
 
     //New items should got to the top of the list.
     var todo = document.createElement('li');
-    todo.innerText = item.value;
+    todo.innerHTML = linkify(item.value);
 
     var created = document.createElement('span');
     created.classList.add('createdAt');
