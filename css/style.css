@@ -21,7 +21,7 @@
     top: 0;
     left: 0;
     z-index: 5;
-    background: #25b99a;
+    background: #0065ff;
     box-shadow: 0px 2px 4px rgb(44, 62, 80, 0.15);
     border-bottom-right-radius: 10px;
     border-bottom-left-radius: 10px;
@@ -104,7 +104,7 @@
   }
 
   header button svg .fill {
-    fill: #25b99a;
+    fill: #505f79;
   }
 
   .container {
@@ -208,12 +208,12 @@
   }
 
   ul.todo li .buttons button.complete svg .fill {
-    fill: #25b99a;
+    fill: #505f79;
   }
 
   ul.todo li .buttons button.complete svg {
     border-radius: 11px;
-    border: 1.5px solid #25b99a;
+    border: 1.5px solid #505f79;
 
     -webkit-transition: background 0.2s ease;
     -moz-transition: background 0.2s ease;
@@ -223,12 +223,12 @@
   }
 
   ul.todo#completedTodos li .buttons button.complete svg {
-    background: #25b99a;
+    background: #505f79;
     border: 0px;
   }
 
   ul.todo:not(#completedTodos) li .buttons button.complete:hover svg {
-    background: rgba(37, 185, 154, 0.75);
+    background: #505f79;
   }
 
   ul.todo:not(#completedTodos) li .buttons button.complete:hover svg .fill {
