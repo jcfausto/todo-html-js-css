@@ -2,15 +2,59 @@
 
   body {
       background: #edf0f1;
-      padding: 80px 0 0 0;
   }
 
   body, input, button {
     font-family: 'Roboto', sans-serif;
   }
 
+  @media (min-width: 700px) {
+    body {
+      padding: 80px 0 0 0;
+    }
+  }
+
+  @media (max-width: 700px) {
+    body {
+      padding: 30px 0 0 0;
+    }
+  }
+
   .noFill {
     fill: none;
+  }
+
+  .btn-auth-login {
+    color: #505f79;
+    background-color: #edf0f1;
+
+    border: .2rem solid #505f79;
+    border-radius: 12rem;
+    padding: 1.05rem 2.75rem;
+
+    font-size: 1.2rem;
+    font-weight: 300;
+    text-transform: uppercase;
+
+    margin-top: 5%;
+  }
+
+  .btn-auth-login:hover {
+    color: #000000;
+
+    transition: color .3s,border .3s;
+    -webkit-transition: color .3s,border .3s;
+    -moz-transition: color .3s,border .3s;
+    -ms-transition: color .3s,border .3s;
+    -o-transition: color .3s,border .3s;
+  }
+
+  .auth-container {
+    text-align: center;
+  }
+
+  .auth-container h1 {
+    color: #505f79;
   }
 
   header {
@@ -18,13 +62,26 @@
     height: 80px;
     padding: 15px;
     position: fixed;
-    top: 0;
     left: 0;
     z-index: 5;
     background: #0065ff;
     box-shadow: 0px 2px 4px rgb(44, 62, 80, 0.15);
-    border-bottom-right-radius: 10px;
-    border-bottom-left-radius: 10px;
+  }
+
+  @media (min-width: 700px) {
+    header {
+      top: 0;
+      border-bottom-right-radius: 10px;
+      border-bottom-left-radius: 10px;
+    }
+  }
+
+  @media (max-width: 700px) {
+    header {
+      bottom: 0;
+      border-top-right-radius: 10px;
+      border-top-left-radius: 10px;
+    }
   }
 
   header input {
@@ -105,6 +162,83 @@
 
   header button svg .fill {
     fill: #505f79;
+  }
+
+  footer {
+    display: inline-flex;
+    width: 100%;
+    height: 30px;
+    padding: 10px;
+    position: fixed;
+    left: 0;
+    z-index: 5;
+    background-color: #dcdcdc;
+    box-shadow: 0px 2px 4px rgb(44, 62, 80, 0.15);
+  }
+
+  footer button {
+    width: 70px;
+    height: 25px;
+    float: right;
+    top: 50%;
+    left: 50%;
+    border: none;
+    text-transform: uppercase;
+
+    color: #cacaca;
+    background-color: #edf0f1;
+
+    border: .15rem solid #cacaca;
+    border-radius: 3rem;
+
+    font-size: .8rem;
+    font-weight: 300;
+    text-transform: uppercase;
+
+    margin-left: 10px;
+  }
+
+  footer button:hover {
+    color: #505f79;
+    border: .15rem solid #505f79;
+
+    transition: color .3s,border .3s;
+    -webkit-transition: color .3s,border .3s;
+    -moz-transition: color .3s,border .3s;
+    -ms-transition: color .3s,border .3s;
+    -o-transition: color .3s,border .3s;
+  }
+
+  footer .nickname {
+    width: 100%;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 22px;
+    margin-top: -3px;
+  }
+
+  footer .nickname span {
+    color: #0065ff;
+  }
+
+  @media (min-width: 700px) {
+    footer {
+      bottom: 0;
+    }
+
+    footer button {
+      margin: -8px 0 0 -8px;
+    }
+  }
+
+  @media (max-width: 700px) {
+    footer {
+      top: 0;
+    }
+
+    footer button {
+      margin: -8px 0 0 -8px;
+    }
   }
 
   .container {
