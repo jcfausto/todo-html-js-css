@@ -32,7 +32,8 @@
     "webpack": "^2.5.0"
   },
   "dependencies": {
+    "express": "*",
     "moment": "^2.18.1",
-    "express": "*"
+    "mongoose": "^4.10.2"
   }
 }
