@@ -20,5 +20,6 @@ mongoose.connection.on('connected', function() {
 });
 var db = mongoose.connection;
 
-//Exporting app to be used anywere
+//Exporting app and db to be used anywere
 module.exports = app;
+module.exports = db;
