@@ -2,15 +2,30 @@
 //the DOM is completed loaded
 
 //Telling webpack about this script dependencies
+import { todoStates } from './todo-states.js';
 import {deleteButtonSVG, completeButtonSVG} from './svgs.js';
 var moment = require('moment');
 
 //Make links added to the text clikable
 import { linkify } from './linkify.js';
 
-//Auth0
+//DB
+var config = {
+  apiKey: "AIzaSyDnmLxJUyNB0khhKD75yjs9aW0v0_zWWJA",
+  authDomain: "fir-todo-95078.firebaseapp.com",
+  databaseURL: "https://fir-todo-95078.firebaseio.com",
+  projectId: "fir-todo-95078",
+  storageBucket: "fir-todo-95078.appspot.com",
+  messagingSenderId: "375692946175"
+};
+firebase.initializeApp(config);
 
+ // Get a reference to the database service
+ var database = firebase.database();
+
+//Auth0
 var token = localStorage.getItem('accessToken');
+var userProfile = '';
 
 if (token) {
   showMembersArea();
@@ -74,9 +89,8 @@ function setFooterVisibility(visible) {
 }
 
 function showMembersArea() {
-
   var footer = document.getElementById('footer');
-  var userProfile = JSON.parse(localStorage.getItem('user_profile'));
+  userProfile = JSON.parse(localStorage.getItem('user_profile'));
 
   var nickname = document.createElement('div');
   nickname.classList.add('nickname');
@@ -132,12 +146,26 @@ function showMembersArea() {
   var newTodo = document.getElementById('newTodo');
 
   //Try to get the object from local storage. If it's null, then initializa an empty object
-  var data = (localStorage.getItem('todolist')) ? JSON.parse(localStorage.getItem('todolist')) : {
-    todo: [],
-    completed: []
-  };
+  // var data = (localStorage.getItem('todolist')) ? JSON.parse(localStorage.getItem('todolist')) : {
+  //   todos: []
+  // };
+  var data = {todos: []};
 
-  loadTodoList(data);
+  database.ref('/user-todos/' + userProfile.user_id).once('value').then(function(snapshot) {
+    //var result = snapshot.val();
+    //var count = snapshot.numChildren();
+    //console.log(result);
+
+    //Do nothing if the list is empty
+    //if (!count) return;
+
+    snapshot.forEach(function(item){
+      data.todos.push(item.val());
+      addTodoItem(item.val());
+    });
+
+    console.log(data);
+  });
 
   /* Event listeners (Responding to UI events) */
   addButton.addEventListener('click', function() {
@@ -150,7 +178,7 @@ function showMembersArea() {
       addTodoItem(newItem);
 
       //Store data
-      data.todo.push(newItem);
+      data.todos.push(newItem);
       storeData(data);
     }
 
@@ -168,7 +196,7 @@ function showMembersArea() {
         addTodoItem(newItem);
 
         //Store data
-        data.todo.push(newItem);
+        data.todos.push(newItem);
         storeData(data);
       }
 
@@ -190,32 +218,25 @@ function showMembersArea() {
     console.log(data);
   }
 
-  function loadTodoList(data) {
-    //Do nothing if both lists are empty
-    if (!data.todo.length && !data.completed.length) return;
-
-    for (var i = 0; i < data.todo.length; i++) {
-      var item = data.todo[i];
-      addTodoItem(item);
-    }
-
-
-    for (var i = 0; i < data.completed.length; i++) {
-      var item = data.completed[i];
-      addTodoItem(item, true);
-    }
-
-  }
-
   //Requires a value. Returns false if no value is provided.
   function buildNewItem(value) {
     if (value) {
       var now = moment().format();
+      var newTodoKey = database.ref().child('todos').push().key;
 
-      return {
+      var newTodo = {
+        key: newTodoKey,
         value: value,
-        created: now
+        created_at: now,
+        status: todoStates.TODO,
+        user_id: userProfile.user_id
       };
+
+      var updates = {};
+      updates['/todos/' + newTodoKey] = newTodo;
+      updates['/user-todos/' + userProfile.user_id + '/' + newTodoKey] = newTodo;
+
+      return database.ref().update(updates);
 
     }
     return false;
@@ -226,7 +247,7 @@ function showMembersArea() {
   /* Core user tasks */
 
   //Task: Adding a new todo item
-  function addTodoItem(item, isCompleted) {
+  function addTodoItem(item) {
     //Text should not be empty.
     if (item) {
       //Every todo item should have a delete and a complete button.
@@ -252,13 +273,13 @@ function showMembersArea() {
 
       var created = document.createElement('span');
       created.classList.add('createdAt');
-      created.title = item.created;
-      created.innerText = moment(item.created).format('lll');
+      created.title = item.created_at;
+      created.innerText = moment(item.created_at).format('lll');
 
       todo.appendChild(created);
       todo.appendChild(itemButtons);
 
-      var targetList = (isCompleted) ? completedTodos : todoList;
+      var targetList = (item.status === todoStates.DONE) ? completedTodos : todoList;
 
       targetList.insertBefore(todo, targetList.childNodes[0]);
     }
@@ -274,10 +295,10 @@ function showMembersArea() {
     parent.removeChild(item);
 
     //Store data
-    var dataSource = (id === 'todoList') ? data.todo : data.completed;
+    //var dataSource = (id === 'todoList') ? data.todo : data.completed;
 
-    var objIndex = dataSource.findIndex(item => item.value === value);
-    dataSource.splice(objIndex, 1);
+    var objIndex = data.todos.findIndex(item => item.value === value);
+    data.todos.splice(objIndex, 1);
 
     storeData(data);
   }
@@ -290,19 +311,26 @@ function showMembersArea() {
     var value = item.firstChild.data;
     var id = parent.id;
 
-    var dataSource = (id === 'todoList') ? data.todo : data.completed;
-    var dataTarget = (id === 'todoList') ? data.completed : data.todo;
+    //var dataSource = (id === 'todoList') ? data.todo : data.completed;
+    //var dataTarget = (id === 'todoList') ? data.completed : data.todo;
+
     var targetList = (id === "todoList") ? completedTodos : todoList;
 
     parent.removeChild(item);
     targetList.insertBefore(item, targetList.childNodes[0]);
 
     //Store data
-    var objIndex = dataSource.findIndex(item => item.value === value);
-    var obj = dataSource[objIndex];
+    var objIndex = data.todos.findIndex(item => item.value === value);
+    var obj = data.todos[objIndex];
 
-    dataSource.splice(objIndex, 1);
-    dataTarget.push(obj);
+    if (obj.status === todoStates.TODO) {
+      obj.status = todoStates.DONE;
+    } else {
+      obj.status = todoStates.TODO;
+    }
+
+    data.todos.splice(objIndex, 1);
+    data.todos.push(obj);
 
     storeData(data);
   }
