@@ -15924,18 +15924,18 @@ var moment = __webpack_require__(0);
 
 
 //DB
-var config = {
-  apiKey: "AIzaSyDnmLxJUyNB0khhKD75yjs9aW0v0_zWWJA",
-  authDomain: "fir-todo-95078.firebaseapp.com",
-  databaseURL: "https://fir-todo-95078.firebaseio.com",
-  projectId: "fir-todo-95078",
-  storageBucket: "fir-todo-95078.appspot.com",
-  messagingSenderId: "375692946175"
-};
-firebase.initializeApp(config);
+// var config = {
+//   apiKey: "AIzaSyDnmLxJUyNB0khhKD75yjs9aW0v0_zWWJA",
+//   authDomain: "fir-todo-95078.firebaseapp.com",
+//   databaseURL: "https://fir-todo-95078.firebaseio.com",
+//   projectId: "fir-todo-95078",
+//   storageBucket: "fir-todo-95078.appspot.com",
+//   messagingSenderId: "375692946175"
+// };
+// firebase.initializeApp(config);
 
 // Get a reference to the database service
-var database = firebase.database();
+//var database = db;
 
 //Auth0
 var token = localStorage.getItem('accessToken');
@@ -16047,8 +16047,8 @@ function showMembersArea() {
   var container = document.getElementById('container');
   container.innerHTML = '<!-- todo items list --><ul class="todo" id="todoList"></ul><!-- todo items list --><ul class="todo" id="completedTodos"></ul>';
 
-  var newTodoContainer = document.getElementById('new-todo-container');
-  newTodoContainer.innerHTML = '<input type="text" placeholder="Type a new task.." id="newTodo"><button id="add"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 16 16" style="enable-background:new 0 0 16 16;" xml:space="preserve"><g><g><path class="fill" d="M16,8c0,0.5-0.5,1-1,1H9v6c0,0.5-0.5,1-1,1s-1-0.5-1-1V9H1C0.5,9,0,8.5,0,8s0.5-1,1-1h6V1c0-0.5,0.5-1,1-1s1,0.5,1,1v6h6C15.5,7,16,7.5,16,8z"/></g></g></svg></buttom>';
+  var newTodoContainer = document.getElementById('newTodoForm');
+  newTodoContainer.innerHTML = '<input type="text" placeholder="Type a new task.." id="newTodo" name="newTodo"><button id="add"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 16 16" style="enable-background:new 0 0 16 16;" xml:space="preserve"><g><g><path class="fill" d="M16,8c0,0.5-0.5,1-1,1H9v6c0,0.5-0.5,1-1,1s-1-0.5-1-1V9H1C0.5,9,0,8.5,0,8s0.5-1,1-1h6V1c0-0.5,0.5-1,1-1s1,0.5,1,1v6h6C15.5,7,16,7.5,16,8z"/></g></g></svg></buttom>';
 
   //End of authentication code
   var addButton = document.getElementById('add');
@@ -16064,21 +16064,21 @@ function showMembersArea() {
   // };
   var data = { todos: [] };
 
-  database.ref('/user-todos/' + userProfile.user_id).once('value').then(function (snapshot) {
-    //var result = snapshot.val();
-    //var count = snapshot.numChildren();
-    //console.log(result);
-
-    //Do nothing if the list is empty
-    //if (!count) return;
-
-    snapshot.forEach(function (item) {
-      data.todos.push(item.val());
-      addTodoItem(item.val());
-    });
-
-    console.log(data);
-  });
+  // database.ref('/user-todos/' + userProfile.user_id).once('value').then(function(snapshot) {
+  //   //var result = snapshot.val();
+  //   //var count = snapshot.numChildren();
+  //   //console.log(result);
+  //
+  //   //Do nothing if the list is empty
+  //   //if (!count) return;
+  //
+  //   snapshot.forEach(function(item){
+  //     data.todos.push(item.val());
+  //     addTodoItem(item.val());
+  //   });
+  //
+  //   console.log(data);
+  // });
 
   /* Event listeners (Responding to UI events) */
   addButton.addEventListener('click', function () {
@@ -16099,18 +16099,20 @@ function showMembersArea() {
   //To handle when the user pressed enter
   newTodo.addEventListener('keypress', function (event) {
     if (event.which == 13 || event.keyCode == 13) {
-      var value = newTodo.value;
-      resetInputText();
+      document.getElementById("newTodoForm").submit();
 
-      var newItem = buildNewItem(value);
-
-      if (newItem) {
-        addTodoItem(newItem);
-
-        //Store data
-        data.todos.push(newItem);
-        storeData(data);
-      }
+      // var value = newTodo.value;
+      // resetInputText();
+      //
+      // var newItem = buildNewItem(value);
+      //
+      // if (newItem) {
+      //   addTodoItem(newItem);
+      //
+      //   //Store data
+      //   data.todos.push(newItem);
+      //   storeData(data);
+      // }
 
       return false;
     }
@@ -16134,7 +16136,9 @@ function showMembersArea() {
   function buildNewItem(value) {
     if (value) {
       var now = moment().format();
-      var newTodoKey = database.ref().child('todos').push().key;
+
+      //var newTodoKey = database.ref().child('todos').push().key;
+      var newTodoKey = 1;
 
       var newTodo = {
         key: newTodoKey,
@@ -16148,7 +16152,8 @@ function showMembersArea() {
       updates['/todos/' + newTodoKey] = newTodo;
       updates['/user-todos/' + userProfile.user_id + '/' + newTodoKey] = newTodo;
 
-      return database.ref().update(updates);
+      //return database.ref().update(updates);
+      return newTodo;
     }
     return false;
   }

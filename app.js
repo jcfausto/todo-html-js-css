@@ -1,8 +1,10 @@
 var express = require('express');
+var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var config = require('./config/config');
 
 var app = express();
+app.use(bodyParser.urlencoded({'extended':'true'})); //parse application/x-www-form-urlencoded
 
 //This app is basic static files right now.
 app.use(express.static('public'));
@@ -20,6 +22,14 @@ mongoose.connection.on('connected', function() {
 });
 var db = mongoose.connection;
 
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/public/index.html');
+});
+
+app.post('/todos', (req, res) => {
+  console.log(req.body);
+  res.sendFile(__dirname + '/public/index.html');
+});
+
 //Exporting app and db to be used anywere
 module.exports = app;
-module.exports = db;
